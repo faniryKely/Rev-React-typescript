@@ -1,7 +1,7 @@
 import { nanoid } from "nanoid";
 import { useState } from "react";
 import "./TaskManager.css";
-
+import {useTaskManager} from "../Hooks/userTaskManager";
 
 type Task = {
   title: string;
@@ -22,32 +22,7 @@ export const TaskManager = () => {
   const completeTask = (id: string) => {
     deleteTask(id)
   };
-   function useTaskManager() {
-    const [tasksValue, setTasksValue] = useState([] as Task[]);
-    const [keyword, setKeyword] = useState("")
-    function saveTask(task: Task) {
-        setTasksValue(prev => [...prev, task]);
-    }
-
-    function deleteTask(id: string) {
-        setTasksValue(prev => prev.filter(task => task.id !== id));
-    }
-
-    function searchTask(keyword: string) {
-        setKeyword(keyword);
-    }
-
-    return {
-        saveTask,
-        deleteTask,
-        searchTask,
-        task: keyword !== "" ? tasksValue.filter(task => task
-            .title
-            .toLowerCase()
-            .includes(keyword.toLowerCase())
-        ) : tasksValue
-    }
-}
+   
   const updateTask = (id: string, taskTitleUpdate: string) => {
     saveTask({
       id,
